@@ -83,15 +83,6 @@ NMainWindow::NMainWindow(const QString &uiFile, QWidget *parent) : QDialog(paren
     foreach (QWidget *widget, widgets)
         widget->installEventFilter(this);
 
-    QIcon icon;
-#ifdef Q_OS_LINUX
-    icon = QIcon::fromTheme("nulloy");
-#endif
-    if (icon.isNull()) {
-        icon.addFile(":icon.svg");
-    }
-    setWindowIcon(icon);
-
     QMetaObject::connectSlotsByName(this);
 }
 

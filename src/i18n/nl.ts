@@ -260,9 +260,9 @@
     </message>
 </context>
 <context>
-    <name>NPreferencesDialog</name>
+    <name>NPreferencesDialogHandler</name>
     <message>
-        <location filename="../preferencesDialog.cpp" line="+55"/>
+        <location filename="../preferencesDialog.qml" line="+55"/>
         <source>Ok</source>
         <translation>Oké</translation>
     </message>
@@ -493,9 +493,9 @@
     </message>
 </context>
 <context>
-    <name>PreferencesDialog</name>
+    <name>preferencesDialog</name>
     <message>
-        <location filename="../preferencesDialog.cpp" line="-386"/>
+        <location filename="../preferencesDialog.qml" line="-386"/>
         <source>English</source>
         <translation>Nederlands</translation>
     </message>
@@ -534,7 +534,7 @@
         <translation>Geen taglezerplug-in aangetroffen.</translation>
     </message>
     <message>
-        <location filename="../preferencesDialog.cpp" line="+506"/>
+        <location filename="../preferencesDialog.qml" line="+506"/>
         <source>System Tray (Notification Area) is not available on your system.</source>
         <translation>Uw besturingssysteem beschikt niet over een systeemvak.</translation>
     </message>

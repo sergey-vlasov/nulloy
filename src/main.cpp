@@ -165,6 +165,15 @@ int main(int argc, char *argv[])
         }
     }
 
+    QIcon icon;
+#ifdef Q_OS_LINUX
+    icon = QIcon::fromTheme("nulloy");
+#endif
+    if (icon.isNull()) {
+        icon.addFile(":icon.svg");
+    }
+    QGuiApplication::setWindowIcon(icon);
+
 #ifndef _N_NO_SKINS_
     NSkinFileSystem::init();
 #endif

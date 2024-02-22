@@ -13,38 +13,35 @@
 **
 *********************************************************************/
 
-#ifndef N_SHORTCUT_EDITOR_WIDGET_H
-#define N_SHORTCUT_EDITOR_WIDGET_H
+#ifndef N_PREFERENCES_DIALOG_HANDLER_H
+#define N_PREFERENCES_DIALOG_HANDLER_H
 
-#include <QList>
-#include <QTableWidget>
+#include "dialogHandler.h"
+#include <QObject>
 
-class NAction;
-class QKeyEvent;
-class QString;
+class QQmlApplicationEngine;
 
-class NShortcutEditorWidget : public QTableWidget
+class NPreferencesDialogHandler : public NDialogHandler
 {
     Q_OBJECT
 
 private:
-    bool m_init;
-    QList<NAction *> m_actionList;
-    static QString keyEventToString(QKeyEvent *e);
-    void keyPressEvent(QKeyEvent *e);
-    enum Columns
-    {
-        Name = 0,
-        Description = 1,
-        Shortcut = 2,
-        GlobalShortcut = 3,
-    };
+    QString m_versionCached;
 
 public:
-    NShortcutEditorWidget(QWidget *parent = 0);
-    ~NShortcutEditorWidget(void);
-    void applyShortcuts();
-    void init(const QList<NAction *> &actionList);
+    NPreferencesDialogHandler(QWidget *parent = 0);
+    ~NPreferencesDialogHandler();
+
+signals:
+    void settingsApplied();
+
+#ifndef _N_NO_UPDATE_CHECK_
+public slots:
+    void setVersionLabel(const QString &version);
+
+signals:
+    void versionRequested();
+#endif
 };
 
 #endif

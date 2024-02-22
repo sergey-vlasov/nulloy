@@ -1,0 +1,4 @@
+module src
+NScrollView 1.0 scrollView.qml
+NScrollRedirect 1.0 scrollRedirect.qml
+NText 1.0 text.qml

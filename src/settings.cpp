@@ -168,10 +168,10 @@ void NSettings::initShortcuts(QObject *instance)
         if (action->isCustomizable()) {
             m_actionList << action;
 
-            QStringList localsList = value("Shortcuts/" + action->objectName()).toStringList();
-            if (!localsList.isEmpty()) {
+            QStringList shortcutStr = value("Shortcuts/" + action->objectName()).toStringList();
+            if (!shortcutStr.isEmpty()) {
                 QList<QKeySequence> localShortcuts;
-                foreach (QString str, localsList) {
+                foreach (QString str, shortcutStr) {
                     localShortcuts << QKeySequence(str);
                 }
                 action->setShortcuts(localShortcuts);
@@ -197,30 +197,22 @@ void NSettings::saveShortcuts()
             continue;
         }
 
-        QList<QKeySequence> localKeys = action->shortcuts();
-        if (!localKeys.isEmpty()) {
-            QStringList localsList;
-            foreach (QKeySequence seq, localKeys) {
-                if (!seq.isEmpty()) {
-                    localsList << seq.toString();
-                }
+        {
+            QList<QKeySequence> shortcut = action->shortcuts();
+            QStringList shortcutStr;
+            foreach (QKeySequence seq, shortcut) {
+                shortcutStr << seq.toString();
             }
-            setValue("Shortcuts/" + action->objectName(), localsList);
-        } else {
-            remove("Shortcuts/" + action->objectName());
+            setValue("Shortcuts/" + action->objectName(), shortcutStr);
         }
 
-        QList<QKeySequence> globalKeys = action->globalShortcuts();
-        if (!globalKeys.isEmpty()) {
-            QStringList globalsList;
-            foreach (QKeySequence seq, globalKeys) {
-                if (!seq.isEmpty()) {
-                    globalsList << seq.toString();
-                }
+        {
+            QList<QKeySequence> shortcut = action->globalShortcuts();
+            QStringList shortcutStr;
+            foreach (QKeySequence seq, shortcut) {
+                shortcutStr << seq.toString();
             }
-            setValue("GlobalShortcuts/" + action->objectName(), globalsList);
-        } else {
-            remove("GlobalShortcuts/" + action->objectName());
+            setValue("GlobalShortcuts/" + action->objectName(), shortcutStr);
         }
     }
 }
@@ -251,4 +243,43 @@ void NSettings::remove(const QString &key)
 {
     QSettings::remove(key);
     emit valueChanged(key, QString());
+}
+
+NSettingsOverlay::NSettingsOverlay(QObject *parent) : QObject(parent)
+{
+    for (const QString &key : NSettings::instance()->allKeys()) {
+        m_map[key] = NSettings::instance()->value(key);
+    }
+}
+
+QVariant NSettingsOverlay::value(const QString &key) const
+{
+    if (!m_map.contains(key)) {
+        return "";
+    }
+
+    QVariant value = m_map.value(key);
+    if (QString(value.typeName()) == "QString" &&
+        (value.toString() == "false" || value.toString() == "true")) {
+        return QVariant(value.toBool());
+    }
+
+    return value;
+}
+
+void NSettingsOverlay::setValue(const QString &key, const QVariant &value)
+{
+    m_map[key] = value;
+}
+
+void NSettingsOverlay::commit()
+{
+    QMapIterator<QString, QVariant> iter(m_map);
+    while (iter.hasNext()) {
+        iter.next();
+        NSettings::instance()->setValue(iter.key(), iter.value());
+    }
+
+    NSettings::instance()->saveShortcuts();
+    emit committed();
 }

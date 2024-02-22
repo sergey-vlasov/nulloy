@@ -278,9 +278,9 @@
     </message>
 </context>
 <context>
-    <name>NPreferencesDialog</name>
+    <name>NPreferencesDialogHandler</name>
     <message>
-        <location filename="../preferencesDialog.cpp" line="+55"/>
+        <location filename="../preferencesDialog.qml" line="+55"/>
         <source>Ok</source>
         <translation>Добре</translation>
     </message>
@@ -520,9 +520,9 @@
     </message>
 </context>
 <context>
-    <name>PreferencesDialog</name>
+    <name>preferencesDialog</name>
     <message>
-        <location filename="../preferencesDialog.ui" line="+31"/>
+        <location filename="../preferencesDialog.qml" line="+31"/>
         <source>General</source>
         <translation>Загальне</translation>
     </message>
@@ -729,7 +729,7 @@
         <translation>Зміна плагіну потребує перезапуску</translation>
     </message>
     <message>
-        <location filename="../preferencesDialog.cpp" line="-386"/>
+        <location filename="../preferencesDialog.qml" line="-386"/>
         <source>English</source>
         <translation>Українська</translation>
     </message>
@@ -783,7 +783,7 @@
         <translation>Не знайдено плагін TagReader.</translation>
     </message>
     <message>
-        <location filename="../preferencesDialog.cpp" line="+506"/>
+        <location filename="../preferencesDialog.qml" line="+506"/>
         <source>System Tray (Notification Area) is not available on your system.</source>
         <translation>Системний лоток (Область повідомлень) на даній системі не доступний (-на).</translation>
     </message>

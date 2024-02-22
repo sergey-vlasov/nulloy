@@ -1,5 +1,11 @@
 QT += script gui svg core-private
 
+QT += quick
+qml.files = $$files(*.qml) qmldir
+qml.prefix = src
+RESOURCES += qml
+#CONFIG += qml_debug
+
 INCLUDEPATH += $$SRC_DIR $$SRC_DIR/interfaces
 
 HEADERS += $$SRC_DIR/*.h

@@ -117,8 +117,7 @@ public:
         WaveformBuilder = (1<<1), // 2
         TagReader       = (1<<2), // 4
         CoverReader     = (1<<3), // 8
-        TagWriter       = (1<<4), // 16
-        MaxPlugin       = (1<<5) - 1
+        MaxPlugin       = (1<<4) - 1
     };
     // clang-format on
 

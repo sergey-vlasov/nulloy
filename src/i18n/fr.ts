@@ -278,9 +278,9 @@
     </message>
 </context>
 <context>
-    <name>NPreferencesDialog</name>
+    <name>NPreferencesDialogHandler</name>
     <message>
-        <location filename="../preferencesDialog.cpp" line="+55"/>
+        <location filename="../preferencesDialog.qml" line="+55"/>
         <source>Ok</source>
         <translation>ОK</translation>
     </message>
@@ -520,9 +520,9 @@
     </message>
 </context>
 <context>
-    <name>PreferencesDialog</name>
+    <name>preferencesDialog</name>
     <message>
-        <location filename="../preferencesDialog.ui" line="+31"/>
+        <location filename="../preferencesDialog.qml" line="+31"/>
         <source>General</source>
         <translation>Général</translation>
     </message>
@@ -729,7 +729,7 @@
         <translation>Changer de plugin necessite un redémarrage de Nulloy</translation>
     </message>
     <message>
-        <location filename="../preferencesDialog.cpp" line="-386"/>
+        <location filename="../preferencesDialog.qml" line="-386"/>
         <source>English</source>
         <translation>Français</translation>
     </message>
@@ -783,7 +783,7 @@
         <translation>Plugin introuvage (TagReader).</translation>
     </message>
     <message>
-        <location filename="../preferencesDialog.cpp" line="+506"/>
+        <location filename="../preferencesDialog.qml" line="+506"/>
         <source>System Tray (Notification Area) is not available on your system.</source>
         <translation>L&apos;affichage dans une zone de notification n&apos;est pas disponible pour ce système.</translation>
     </message>

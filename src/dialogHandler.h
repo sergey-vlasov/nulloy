@@ -13,28 +13,42 @@
 **
 *********************************************************************/
 
-#ifndef N_MULTI_LINE_EDIT_H
-#define N_MULTI_LINE_EDIT_H
+#ifndef N_DIALOG_HANDLER_H
+#define N_DIALOG_HANDLER_H
 
-#include <QPlainTextEdit>
+#include <QObject>
+#include <QQmlContext>
 
-class NMultiLineEdit : public QPlainTextEdit
+class QQmlApplicationEngine;
+
+class NDialogHandler : public QObject
 {
     Q_OBJECT
 
-private:
-    void keyPressEvent(QKeyEvent *e);
-    void insertFromMimeData(const QMimeData *source);
-    void appendPlainText(const QString &text) {}
-    void insertPlainText(const QString &text) {}
-    void setPlainText(const QString &text) {}
-
 public:
-    NMultiLineEdit(QWidget *parent = 0);
-    QString text();
+    using Callback = std::function<void()>;
+
+    NDialogHandler(const QUrl &url, QWidget *parent = 0);
+    virtual ~NDialogHandler();
+
+    void setBeforeShowCallback(Callback callback);
+    void setAfterShowCallback(Callback callback);
+
+    QQmlContext *rootContext();
+    QObject *rootObject();
 
 public slots:
-    void setText(const QString &text);
+    void showDialog();
+    void centerToParent();
+
+private slots:
+    void on_closed();
+
+private:
+    QQmlApplicationEngine *m_qmlEngine{};
+    QUrl m_url;
+    Callback m_beforeShowCallback{};
+    Callback m_afterShowCallback{};
 };
 
 #endif
