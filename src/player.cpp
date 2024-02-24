@@ -15,10 +15,10 @@
 
 #include "player.h"
 
-#include "aboutDialog.h"
 #include "action.h"
 #include "common.h"
 #include "coverWidget.h"
+#include "dialogHandler.h"
 #include "i18nLoader.h"
 #include "logDialog.h"
 #include "mainWindow.h"
@@ -110,7 +110,6 @@ NPlayer::NPlayer()
     scriptFile.close();
     QScriptValue skinProgram = m_scriptEngine->evaluate("Main").construct();
 
-    m_aboutDialog = NULL;
     m_logDialog = new NLogDialog(m_mainWindow);
     m_preferencesDialogHandler = new NPreferencesDialogHandler(m_mainWindow);
     m_volumeSlider = m_mainWindow->findChild<NVolumeSlider *>("volumeSlider");
@@ -154,6 +153,8 @@ NPlayer::NPlayer()
     NMacDock::instance()->registerClickHandler();
     connect(NMacDock::instance(), SIGNAL(clicked()), m_mainWindow, SLOT(show()));
 #endif
+
+    m_utils = new NUtils(this);
 
     m_mainWindow->setTitle(QCoreApplication::applicationName() + " " +
                            QCoreApplication::applicationVersion());
@@ -621,7 +622,7 @@ void NPlayer::connectSignals()
     connect(m_showCoverAction, SIGNAL(toggled(bool)), this, SLOT(on_showCoverAction_toggled(bool)));
     connect(m_showPlaybackControlsAction, SIGNAL(toggled(bool)), m_mainWindow,
             SLOT(showPlaybackControls(bool)));
-    connect(m_aboutAction, SIGNAL(triggered()), this, SLOT(showAboutMessageBox()));
+    connect(m_aboutAction, SIGNAL(triggered()), this, SLOT(showAboutDialog()));
     connect(m_playingOnTopAction, SIGNAL(toggled(bool)), this,
             SLOT(on_whilePlayingOnTopAction_toggled(bool)));
     connect(m_alwaysOnTopAction, SIGNAL(toggled(bool)), this,
@@ -1200,12 +1201,15 @@ void NPlayer::on_playButton_clicked()
     }
 }
 
-void NPlayer::showAboutMessageBox()
+void NPlayer::showAboutDialog()
 {
-    if (!m_aboutDialog) {
-        m_aboutDialog = new NAboutDialog(m_mainWindow);
-    }
-    m_aboutDialog->show();
+    NDialogHandler *dialogHandler = new NDialogHandler(QUrl::fromLocalFile(":src/aboutDialog.qml"),
+                                                       m_mainWindow);
+    dialogHandler->setBeforeShowCallback([&]() {
+        QQmlContext *context = dialogHandler->rootContext();
+        context->setContextProperty("utils", m_utils);
+    });
+    dialogHandler->showDialog();
 }
 
 void NPlayer::showOpenFileDialog()
@@ -1251,7 +1255,7 @@ void NPlayer::showOpenDirDialog()
     m_settings->setValue("LastDirectory", lastDir);
 
     bool isEmpty = (m_playlistWidget->count() == 0);
-    m_playlistWidget->addItems(NUtils::dirListRecursive(dir));
+    m_playlistWidget->addItems(m_utils->dirListRecursive(dir));
     if (isEmpty) {
         m_playlistWidget->playRow(0);
     }

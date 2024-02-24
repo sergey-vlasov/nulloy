@@ -95,7 +95,7 @@ Dialog {
           GridLayout {
             columns: 3
             Component.onCompleted: {
-              if (typeof skinsModel === 'undefined') {
+              if (typeof skinsModel === undefined) {
                 // hide skins row:
                 children[3].visible = false;
                 children[4].visible = false;

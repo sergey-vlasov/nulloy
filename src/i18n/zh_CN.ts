@@ -2,9 +2,9 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="zh_CN">
 <context>
-    <name>NAboutDialog</name>
+    <name>aboutDialog</name>
     <message>
-        <location filename="../aboutDialog.cpp" line="+177"/>
+        <location filename="../aboutDialog.qml" line="+177"/>
         <source>Close</source>
         <translation>关闭</translation>
     </message>
@@ -752,7 +752,7 @@
         <translation>文件不存在: &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../aboutDialog.cpp" line="+5"/>
+        <location filename="../aboutDialog.qml" line="+5"/>
         <source>About </source>
         <translation>关于 </translation>
     </message>

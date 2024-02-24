@@ -2,9 +2,9 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="lt">
 <context>
-    <name>NAboutDialog</name>
+    <name>aboutDialog</name>
     <message>
-        <location filename="../aboutDialog.cpp" line="+50"/>
+        <location filename="../aboutDialog.qml" line="+50"/>
         <source>Version: </source>
         <translation>Versija: </translation>
     </message>
@@ -737,7 +737,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../aboutDialog.cpp" line="-122"/>
+        <location filename="../aboutDialog.qml" line="-122"/>
         <source>About </source>
         <translation>Apie</translation>
     </message>

@@ -16,11 +16,18 @@
 #ifndef N_UTILS_H
 #define N_UTILS_H
 
+#include <QObject>
+
 #include "playlistDataItem.h"
 
-namespace NUtils
+class NUtils : public QObject
 {
-    QList<NPlaylistDataItem> dirListRecursive(const QString &path);
-} // namespace NUtils
+    Q_OBJECT
+
+public:
+    explicit NUtils(QObject *parent = nullptr);
+    static QList<NPlaylistDataItem> dirListRecursive(const QString &path);
+    Q_INVOKABLE static QString readFile(const QString &path);
+};
 
 #endif

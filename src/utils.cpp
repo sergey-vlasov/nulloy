@@ -18,13 +18,9 @@
 #include "playlistStorage.h"
 #include "settings.h"
 
-namespace NUtils
-{
-    static QList<NPlaylistDataItem> _processPath(const QString &path,
-                                                 const QStringList &nameFilters);
-} // namespace NUtils
+NUtils::NUtils(QObject *parent) : QObject(parent) {}
 
-QList<NPlaylistDataItem> NUtils::_processPath(const QString &path, const QStringList &nameFilters)
+static QList<NPlaylistDataItem> _processPath(const QString &path, const QStringList &nameFilters)
 {
     QList<NPlaylistDataItem> dataItemsList;
     QFileInfo fileInfo = QFileInfo(path);
@@ -56,4 +52,14 @@ QList<NPlaylistDataItem> NUtils::dirListRecursive(const QString &path)
 {
     QStringList nameFilters = NSettings::instance()->value("FileFilters").toString().split(' ');
     return _processPath(path, nameFilters);
+}
+
+QString NUtils::readFile(const QString &path)
+{
+    QFile file(path);
+    file.open(QIODevice::ReadOnly | QIODevice::Text);
+    QTextStream thanksStream(&file);
+    QString text = thanksStream.readAll();
+    file.close();
+    return text;
 }
