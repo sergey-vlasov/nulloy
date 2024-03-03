@@ -30,9 +30,9 @@ private:
     static NSettings *m_instance;
     QList<NAction *> m_actionList;
     void initValue(const QString &key, const QVariant &defaultValue);
+    NSettings(QObject *parent = nullptr);
 
 public:
-    NSettings(QObject *parent = 0);
     ~NSettings();
     static NSettings *instance();
 

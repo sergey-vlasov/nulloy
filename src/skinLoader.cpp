@@ -127,7 +127,8 @@ void NSkinLoader::_init()
             QByteArray data;
             while (_nextFile(zipFile, fileName, data)) {
                 if (fileName == _idFileName) {
-                    id = data.mid(0, data.indexOf('\n')).replace('\r', "");
+                    id = data.mid(0, data.indexOf('\n')).replace('\r', "") + " (." + _skinSuffix +
+                         ")";
                     break;
                 }
             }
@@ -205,15 +206,16 @@ void NSkinLoader::_init()
         QFileInfoList infoList =
             QDir(skinContainer.absoluteFilePath()).entryInfoList(QDir::Files | QDir::NoDotAndDotDot);
         foreach (QFileInfo fileInfo, infoList) {
-            if (fileInfo.fileName() != _scriptFileName && fileInfo.fileName() != _formFileName) {
-                continue;
-            }
             QFile file(fileInfo.absoluteFilePath());
             file.open(QIODevice::ReadOnly);
             QByteArray data = file.readAll();
+            if (fileInfo.fileName() != _scriptFileName && fileInfo.fileName() != _formFileName) {
+                NSkinFileSystem::addFile(fileInfo.fileName(), data);
+                continue;
+            }
             QString str(data);
             QRegExp rx("(url\\()([^:])");
-            str.replace(rx, "\\1" + fileInfo.absolutePath() + "/\\2");
+            str.replace(rx, "\\1" + NSkinFileSystem::prefix() + "\\2");
             str.replace("<iconset resource=\"resources.qrc\">", "<iconset>");
             NSkinFileSystem::addFile(fileInfo.fileName(), str.toUtf8());
 

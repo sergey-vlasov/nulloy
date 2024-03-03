@@ -25,15 +25,19 @@ class NLogDialog;
 class NMainWindow;
 class NPlaybackEngineInterface;
 class NPlaylistWidget;
+class NPlaylistController;
 class NWaveformSlider;
 class NCoverWidget;
+class NImage;
 class NCoverReaderInterface;
 class NVolumeSlider;
 class NPreferencesDialogHandler;
 class NScriptEngine;
+class QQmlApplicationEngine;
 class NSettings;
 class NTrackInfoReader;
 class NTrackInfoWidget;
+class NTrackInfoModel;
 class QMenu;
 class NAction;
 class QString;
@@ -52,8 +56,10 @@ class NPlayer : public QWidget
 private:
     NSettings *m_settings;
     NScriptEngine *m_scriptEngine;
+    QQmlApplicationEngine *m_qmlEngine;
     NMainWindow *m_mainWindow;
     NCoverWidget *m_coverWidget;
+    NImage *m_coverImage;
     NCoverReaderInterface *m_coverReader;
     NWaveformSlider *m_waveformSlider;
     NPreferencesDialogHandler *m_preferencesDialogHandler;
@@ -64,7 +70,9 @@ private:
     QMenu *m_windowSubMenu;
     QMenu *m_playlistSubMenu;
     NPlaylistWidget *m_playlistWidget;
+    NPlaylistController *m_playlistController;
     NTrackInfoWidget *m_trackInfoWidget;
+    NTrackInfoModel *m_trackInfoModel;
     NLogDialog *m_logDialog;
     QSystemTrayIcon *m_systemTray;
     QTimer *m_trayClickTimer;
@@ -127,6 +135,9 @@ public:
     ~NPlayer();
     NMainWindow *mainWindow();
     NPlaybackEngineInterface *playbackEngine();
+    Q_INVOKABLE QString volumeTooltipText(qreal value) const;
+    Q_INVOKABLE void setOverrideCursor(Qt::CursorShape shape);
+    Q_INVOKABLE void restoreOverrideCursor();
 
 private slots:
     void on_preferencesDialog_settingsChanged();

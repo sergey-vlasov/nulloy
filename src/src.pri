@@ -5,6 +5,9 @@ qml.files = $$files(*.qml) qmldir
 qml.prefix = src
 RESOURCES += qml
 #CONFIG += qml_debug
+CONFIG += qmltypes
+QML_IMPORT_NAME = Nulloy
+QML_IMPORT_MAJOR_VERSION = 1
 
 INCLUDEPATH += $$SRC_DIR $$SRC_DIR/interfaces
 

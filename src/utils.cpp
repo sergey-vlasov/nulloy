@@ -63,3 +63,8 @@ QString NUtils::readFile(const QString &path)
     file.close();
     return text;
 }
+
+QString NUtils::pathToUri(const QString &path)
+{
+    return QUrl::fromLocalFile(path).toString();
+}

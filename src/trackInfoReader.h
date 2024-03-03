@@ -43,6 +43,7 @@ public:
     void updatePlaybackPosition(int seconds);
     void updatePlaylistDuration(int seconds);
     QString toString(const QString &format) const;
+    Q_INVOKABLE QString format(const QString &fmt) const { return toString(fmt); }
     QString getInfo(QChar ch) const;
     static QString formatTime(int durationSec);
 };

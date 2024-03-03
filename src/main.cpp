@@ -102,6 +102,8 @@ int main(int argc, char *argv[])
 
     QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    qputenv("QML_DISABLE_DISTANCEFIELD", "1");
+    //qputenv("QSG_RENDER_LOOP", "basic");
 
 #ifdef Q_OS_MAC
     // https://bugreports.qt-project.org/browse/QTBUG-32789
@@ -175,7 +177,7 @@ int main(int argc, char *argv[])
     QGuiApplication::setWindowIcon(icon);
 
 #ifndef _N_NO_SKINS_
-    NSkinFileSystem::init();
+    NSkinFileSystem::instance();
 #endif
 
     NPlayer p;

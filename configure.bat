@@ -129,6 +129,9 @@ if not "%FORCE_VERSION%" == "no" (
 
 echo N_CONFIG_SUCCESS = yes>> %QMAKE_CACHE%
 
+REM workaround for *_qmltyperegistrations.cpp:(.text+0x0): multiple definition of `qml_register_types_*()'
+del src/nulloy_qmltyperegistrations.cpp 2>null
+
 echo.
 echo Running qmake...
 %QMAKE%

@@ -28,6 +28,9 @@ class NPlaybackEngineGStreamer : public NPlaybackEngineInterface, public NPlugin
 {
     Q_OBJECT
     Q_INTERFACES(NPlaybackEngineInterface NPlugin)
+    Q_PROPERTY(int state READ state NOTIFY stateChanged)
+    Q_PROPERTY(qreal position READ position WRITE setPosition NOTIFY positionChanged)
+    Q_PROPERTY(qreal volume READ volume WRITE setVolume NOTIFY volumeChanged)
 
 private:
     GstElement *m_playbin;

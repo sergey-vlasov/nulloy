@@ -2,3 +2,11 @@ module src
 NScrollView 1.0 scrollView.qml
 NScrollRedirect 1.0 scrollRedirect.qml
 NText 1.0 text.qml
+NResizeHandler 1.0 resizeHandler.qml
+NButton 1.0 button.qml
+NSvgButton 1.0 svgButton.qml
+NFadeOut 1.0 fadeOut.qml
+NPlaylist 1.0 playlist.qml
+NSplitter 1.0 splitter.qml
+NTrackInfo 1.0 trackInfo.qml
+NCoverImage 1.0 coverImage.qml

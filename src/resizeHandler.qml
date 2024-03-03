@@ -13,22 +13,14 @@
 **
 *********************************************************************/
 
-#ifndef N_UTILS_H
-#define N_UTILS_H
+import QtQuick 2.15
+import QtQuick.Window 2.15
 
-#include <QObject>
-
-#include "playlistDataItem.h"
-
-class NUtils : public QObject
-{
-    Q_OBJECT
-
-public:
-    explicit NUtils(QObject *parent = nullptr);
-    static QList<NPlaylistDataItem> dirListRecursive(const QString &path);
-    Q_INVOKABLE static QString readFile(const QString &path);
-    Q_INVOKABLE static QString pathToUri(const QString &path);
-};
-
-#endif
+MouseArea {
+  property int resizeFlags: 0
+  hoverEnabled: true
+  z: 1
+  acceptedButtons: Qt.LeftButton
+  cursorShape: Qt.BlankCursor
+  onPressed: Window.window.startSystemResize(resizeFlags)
+}

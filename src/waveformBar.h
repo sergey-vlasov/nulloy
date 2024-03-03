@@ -13,22 +13,34 @@
 **
 *********************************************************************/
 
-#ifndef N_UTILS_H
-#define N_UTILS_H
+#ifndef N_WAVEFORM_BAR_H
+#define N_WAVEFORM_BAR_H
 
-#include <QObject>
+#include <QPainterPath>
+#include <QQuickPaintedItem>
 
-#include "playlistDataItem.h"
+class NWaveformBuilderInterface;
 
-class NUtils : public QObject
+class NWaveformBar : public QQuickPaintedItem
 {
     Q_OBJECT
 
+private:
+    NWaveformBuilderInterface *m_waveBuilder;
+
+    QTimer *m_timer;
+    int m_oldBuilderIndex;
+    float m_oldBuilderPos;
+    bool m_needsUpdate;
+
+    void init();
+
 public:
-    explicit NUtils(QObject *parent = nullptr);
-    static QList<NPlaylistDataItem> dirListRecursive(const QString &path);
-    Q_INVOKABLE static QString readFile(const QString &path);
-    Q_INVOKABLE static QString pathToUri(const QString &path);
+    NWaveformBar(QQuickItem *parent = nullptr);
+    void paint(QPainter *painter);
+
+private slots:
+    void checkForUpdate();
 };
 
 #endif

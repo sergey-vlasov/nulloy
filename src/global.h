@@ -18,6 +18,7 @@
 
 #include <QPainter>
 #include <QtCore>
+#include <QtQml/qqml.h>
 
 template <typename T> class NFlagIterator
 {
@@ -50,20 +51,10 @@ private:
     (c::staticMetaObject.enumerator(c::staticMetaObject.indexOfEnumerator(#e)).keyToValue(k))
 #define ENUMERATOR(c, e) (c::staticMetaObject.enumerator(c::staticMetaObject.indexOfEnumerator(#e)))
 
-#ifndef Q_MOC_RUN
 namespace N
-#else
-class N
-#endif
 {
-#if defined(Q_MOC_RUN)
-    Q_GADGET
-    Q_ENUMS(Tag)
-    Q_ENUMS(PlaybackState)
-    Q_ENUMS(PluginType)
-    Q_ENUMS(CompositionMode)
-public:
-#endif
+    Q_NAMESPACE
+    QML_ELEMENT
 
     enum Tag
     {
@@ -82,6 +73,7 @@ public:
         UrlTag,
         EncodedByTag,
     };
+    Q_ENUM_NS(Tag)
 
     enum PlaylistRole
     {
@@ -102,6 +94,7 @@ public:
         PlaybackPlaying,
         PlaybackPaused
     };
+    Q_ENUM_NS(PlaybackState)
 
     enum M3uExtention
     {
@@ -119,6 +112,7 @@ public:
         CoverReader     = (1<<3), // 8
         MaxPlugin       = (1<<4) - 1
     };
+    Q_ENUM_NS(PluginType)
     // clang-format on
 
     enum MessageIcon
@@ -160,6 +154,7 @@ public:
         Difference      = QPainter::CompositionMode_Difference,
         Exclusion       = QPainter::CompositionMode_Exclusion,
     };
+    Q_ENUM_NS(CompositionMode)
     // clang-format on
 
     extern const QMetaObject staticMetaObject;

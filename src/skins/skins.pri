@@ -17,6 +17,8 @@ for(skin, SKINS) {
     QMAKE_EXTRA_TARGETS += $${skin}
     PRE_TARGETDEPS += $$_target
     system($$_commands)
+
+    unix:!mac:system($$QMAKE_LN_SHLIB -f $$_depends $$SKIN_DEST_DIR/$$skin)
 }
 
 # install

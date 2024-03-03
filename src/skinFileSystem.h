@@ -25,16 +25,18 @@ class QByteArray;
 class QString;
 // class QAbstractFileEngineHandler;
 
-class NSkinFileSystem : public QAbstractFileEngineHandler
+class NSkinFileSystem : public QObject, public QAbstractFileEngineHandler
 {
+    Q_OBJECT
 public:
     QAbstractFileEngine *create(const QString &fileName) const;
-    static bool init();
     static void addFile(const QString &filePath, const QByteArray &ba);
+    Q_INVOKABLE static QByteArray readFile(const QString &filePath);
     static QString prefix();
+    static NSkinFileSystem *instance();
 
 private:
-    NSkinFileSystem();
+    NSkinFileSystem(QObject *parent = nullptr);
     static QHash<QString, QByteArray> m_fileHash;
     static NSkinFileSystem *m_instance;
 };

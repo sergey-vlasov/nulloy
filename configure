@@ -194,6 +194,9 @@ echo "Library directory: $LIBDIR"
 
 echo "N_CONFIG_SUCCESS = yes" >> $QMAKE_CACHE
 
+# workaround for *_qmltyperegistrations.cpp:(.text+0x0): multiple definition of `qml_register_types_*()'
+rm -f src/nulloy_qmltyperegistrations.cpp
+
 echo
 echo "Running qmake..."
 if ! $QMAKE $QMAKE_EXTRA_OPTIONS; then

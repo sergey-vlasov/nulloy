@@ -18,6 +18,7 @@
 #include <QtCore/private/qabstractfileengine_p.h>
 
 #include <QByteArray>
+#include <QDebug>
 #include <QString>
 
 static const char _prefix[] = "skin:";
@@ -45,24 +46,25 @@ private:
     QString m_fileName;
 };
 
-NSkinFileSystem::NSkinFileSystem()
+NSkinFileSystem::NSkinFileSystem(QObject *parent) : QObject(parent)
 {
-    m_instance = NULL;
+    Q_ASSERT_X(!m_instance, "NSkinFileSystem", "NSkinFileSystem instance already exists.");
+
+    m_instance = this;
+}
+
+NSkinFileSystem *NSkinFileSystem::instance()
+{
+    if (!m_instance) {
+        m_instance = new NSkinFileSystem();
+    }
+
+    return m_instance;
 }
 
 QString NSkinFileSystem::prefix()
 {
     return _prefix;
-}
-
-bool NSkinFileSystem::init()
-{
-    if (!m_instance) {
-        m_instance = new NSkinFileSystem;
-        return true;
-    } else {
-        return false;
-    }
 }
 
 NSkinFileEngine::NSkinFileEngine(const QByteArray &ba, const QString &fileName)
@@ -73,8 +75,6 @@ NSkinFileEngine::NSkinFileEngine(const QByteArray &ba, const QString &fileName)
 
 QAbstractFileEngine *NSkinFileSystem::create(const QString &fileName) const
 {
-    init();
-
     if (!fileName.startsWith(_prefix)) {
         return NULL;
     }
@@ -89,9 +89,17 @@ QAbstractFileEngine *NSkinFileSystem::create(const QString &fileName) const
 
 void NSkinFileSystem::addFile(const QString &filePath, const QByteArray &ba)
 {
-    init();
-
     m_fileHash[filePath] = ba;
+}
+
+QByteArray NSkinFileSystem::readFile(const QString &filePath)
+{
+    if (m_fileHash.contains(filePath)) {
+        return m_fileHash.value(filePath);
+    } else {
+        qCritical() << "NSkinFileSystem: file not found:" << filePath;
+        return QByteArray();
+    }
 }
 
 bool NSkinFileEngine::open(QIODevice::OpenMode mode)
