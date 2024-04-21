@@ -24,10 +24,16 @@ class NWaveformBuilderInterface;
 class NWaveformBar : public QQuickPaintedItem
 {
     Q_OBJECT
+    Q_PROPERTY(QColor color WRITE setColor)
+    Q_PROPERTY(QColor borderColor WRITE setBorderColor)
+    Q_PROPERTY(qreal borderWidth WRITE setBorderWidth)
 
 private:
     NWaveformBuilderInterface *m_waveBuilder;
 
+    QColor m_color;
+    QColor m_borderColor;
+    qreal m_borderWidth;
     QTimer *m_timer;
     int m_oldBuilderIndex;
     float m_oldBuilderPos;
@@ -38,6 +44,10 @@ private:
 public:
     NWaveformBar(QQuickItem *parent = nullptr);
     void paint(QPainter *painter);
+
+    void setColor(const QColor &color);
+    void setBorderColor(const QColor &color);
+    void setBorderWidth(qreal width);
 
 private slots:
     void checkForUpdate();

@@ -24,6 +24,7 @@ class NSvgImage : public QQuickPaintedItem
     Q_OBJECT
     Q_PROPERTY(QString source READ source WRITE setSource)
     Q_PROPERTY(QString elementId READ elementId WRITE setElementId)
+    Q_PROPERTY(QColor colorOverlay READ colorOverlay WRITE setColorOverlay)
 
 public:
     NSvgImage(QQuickItem *parent = nullptr);
@@ -31,13 +32,16 @@ public:
 
     QString source() const;
     QString elementId() const;
+    QColor colorOverlay() const;
 
     void setSource(const QString &source);
     void setElementId(const QString &id);
+    void setColorOverlay(const QColor &color);
 
 private:
     QString m_source;
     QString m_elementId;
+    QColor m_colorOverlay;
     QSvgRenderer *m_renderer;
     static QMap<QString, QSvgRenderer *> m_rendererCache;
 };

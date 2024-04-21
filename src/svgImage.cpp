@@ -24,7 +24,10 @@
 
 QMap<QString, QSvgRenderer *> NSvgImage::m_rendererCache;
 
-NSvgImage::NSvgImage(QQuickItem *parent) : QQuickPaintedItem(parent) {}
+NSvgImage::NSvgImage(QQuickItem *parent) : QQuickPaintedItem(parent)
+{
+    m_colorOverlay = Qt::transparent;
+}
 
 QString NSvgImage::source() const
 {
@@ -34,6 +37,11 @@ QString NSvgImage::source() const
 QString NSvgImage::elementId() const
 {
     return m_elementId;
+}
+
+QColor NSvgImage::colorOverlay() const
+{
+    return m_colorOverlay;
 }
 
 void NSvgImage::setSource(const QString &source)
@@ -58,6 +66,12 @@ void NSvgImage::setSource(const QString &source)
 void NSvgImage::setElementId(const QString &id)
 {
     m_elementId = id;
+    update();
+}
+
+void NSvgImage::setColorOverlay(const QColor &color)
+{
+    m_colorOverlay = color;
     update();
 }
 
@@ -86,4 +100,10 @@ void NSvgImage::paint(QPainter *painter)
     painter->scale(scaleX / dpr, scaleY / dpr);
 
     m_renderer->render(painter, m_elementId);
+
+    if (m_colorOverlay != Qt::transparent) {
+        QColor color(m_colorOverlay);
+        painter->setCompositionMode(QPainter::CompositionMode_SourceIn);
+        painter->fillRect(0, 0, width() * dpr, height() * dpr, color);
+    }
 }

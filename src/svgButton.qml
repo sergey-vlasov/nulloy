@@ -23,17 +23,21 @@ Item {
   property string elementId: ""
   property string elementIdHovered: elementId
   property string elementIdPressed: elementId
+  property alias hovered: button.hovered
+  property alias pressed: button.pressed
+  property alias image: image
   signal clicked
   Button {
     id: button
     anchors.fill: parent
-    anchors.centerIn: parent
     background: Rectangle {
       color: "transparent"
     }
     NSvgImage {
+      id: image
       anchors.fill: parent
       source: item.source
+      colorOverlay: "transparent"
       elementId: button.pressed ? item.elementIdPressed : (button.hovered ? item.elementIdHovered : item.elementId)
     }
     onClicked: item.clicked()

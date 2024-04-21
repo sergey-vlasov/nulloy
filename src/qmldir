@@ -10,3 +10,4 @@ NPlaylist 1.0 playlist.qml
 NSplitter 1.0 splitter.qml
 NTrackInfo 1.0 trackInfo.qml
 NCoverImage 1.0 coverImage.qml
+NSizeGrip 1.0 sizeGrip.qml
