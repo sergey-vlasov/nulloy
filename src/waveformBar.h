@@ -16,6 +16,7 @@
 #ifndef N_WAVEFORM_BAR_H
 #define N_WAVEFORM_BAR_H
 
+#include <QLinearGradient>
 #include <QPainterPath>
 #include <QQuickPaintedItem>
 
@@ -27,6 +28,7 @@ class NWaveformBar : public QQuickPaintedItem
     Q_PROPERTY(QColor color WRITE setColor)
     Q_PROPERTY(QColor borderColor WRITE setBorderColor)
     Q_PROPERTY(qreal borderWidth WRITE setBorderWidth)
+    Q_PROPERTY(QVariantList gradientStops WRITE setGradientStops)
 
 private:
     NWaveformBuilderInterface *m_waveBuilder;
@@ -34,6 +36,7 @@ private:
     QColor m_color;
     QColor m_borderColor;
     qreal m_borderWidth;
+    QVariantList m_gradientStops;
     QTimer *m_timer;
     int m_oldBuilderIndex;
     float m_oldBuilderPos;
@@ -48,6 +51,7 @@ public:
     void setColor(const QColor &color);
     void setBorderColor(const QColor &color);
     void setBorderWidth(qreal width);
+    void setGradientStops(const QVariantList &stops);
 
 private slots:
     void checkForUpdate();

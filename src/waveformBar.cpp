@@ -59,6 +59,12 @@ void NWaveformBar::setBorderWidth(qreal width)
     update();
 }
 
+void NWaveformBar::setGradientStops(const QVariantList &stops)
+{
+    m_gradientStops = stops;
+    update();
+}
+
 void NWaveformBar::paint(QPainter *painter)
 {
     float builderPos;
@@ -79,7 +85,21 @@ void NWaveformBar::paint(QPainter *painter)
 
     pathPos.connectPath(pathNeg.toReversed());
     painter->setPen(QPen(m_borderColor, m_borderWidth));
-    painter->setBrush(QBrush(m_color));
+
+    QBrush brush;
+    if (!m_gradientStops.isEmpty()) {
+        QLinearGradient gradient(0, 0, 0, height());
+        for (int i = 0; i < m_gradientStops.size(); ++i) {
+            QVariantMap stop = m_gradientStops.at(i).toMap();
+            qreal position = stop["position"].toFloat();
+            QColor color = QColor(stop["color"].toString());
+            gradient.setColorAt(position, color);
+        }
+        brush = gradient;
+    } else {
+        brush = QBrush(m_color);
+    }
+    painter->setBrush(brush);
     painter->drawPath(pathPos);
 }
 
